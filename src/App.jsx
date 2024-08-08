@@ -9,6 +9,7 @@ function App() {
       <Routes>
         <Route path="" element={<Stuff />} />
         <Route path="/hi" element={<h1>Hi</h1>} />
+        {/* add parametric endpoint to show useParams */}
       </Routes>
     </>
   );

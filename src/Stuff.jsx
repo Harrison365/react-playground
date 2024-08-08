@@ -1,11 +1,14 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MyComponent from "./MyComponent";
+import { useSearchParams } from "react-router-dom";
 
 export default function Stuff() {
   const [count, setCount] = useState(0);
   const [arr, setArr] = useState([]);
   const [newEle, setNewEle] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [gottenQuery, setGottenQuery] = useState("");
 
   function deleteItem(targetIndex) {
     setArr((current) => {
@@ -14,6 +17,12 @@ export default function Stuff() {
       });
     });
   }
+
+  useEffect(() => {
+    let query = searchParams.get("query");
+    setGottenQuery(query);
+    console.log("in useEffect", query);
+  }, [searchParams]);
 
   return (
     <div className="yo">
@@ -69,6 +78,21 @@ export default function Stuff() {
         ></input>
         <button type="submit">Submit</button>
       </form>
+      <p>here is your query query --> {gottenQuery}</p>
+      <button
+        onClick={() => {
+          setSearchParams({ query: "tennis" });
+        }}
+      >
+        query = tennis
+      </button>
+      <button
+        onClick={() => {
+          setSearchParams({ query: "basketball" });
+        }}
+      >
+        query = basketball
+      </button>
     </div>
   );
 }
